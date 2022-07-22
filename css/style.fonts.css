@@ -1,0 +1,12 @@
+@font-face {
+    font-family: 'Chintzy';
+    font-style: normal;
+    font-weight: 400;
+    src: url('./fonts/chintzy.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'Chintzy-3D';
+    font-style: normal;
+    font-weight: 400;
+    src: url('./fonts/chintzys.ttf') format('truetype');
+}
