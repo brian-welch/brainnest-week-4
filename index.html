@@ -8,7 +8,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.1.1/css/all.css">
         <!-- Font Awesome Icons here: https://fontawesome.com/v6/search?q=lists&m=free -->
-        <link rel="stylesheet" href="">
+        <link rel="stylesheet" href="./css/style.index.css">
     </head>
     <body>
         <header>
@@ -59,10 +59,11 @@
             </div>
             <div id="footerDisclaimer">
                 <span>Copyright &copy; - Brian C Welch - </span>
-                <script>
-                    window.onload = (event) => {$("#footerDisclaimer > span").append(new Date(Date.now()).toDateString());}
-                </script>
             </div>
         </footer>
+        <script>
+            window.onload = (event) => {$("#footerDisclaimer > span").append(new Date(Date.now()).toDateString());}
+        </script>
+        <script src="./js/calculator.js"></script>
     </body>
 </html>
