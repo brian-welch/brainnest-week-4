@@ -2,4 +2,6 @@
 @import 'style.fonts.css';
 @import 'style.colors.css';
 @import 'style.base.css';
+@import 'style.header.css';
 @import 'style.calc.css';
+@import 'style.footer.css';

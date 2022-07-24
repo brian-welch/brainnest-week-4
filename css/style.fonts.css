@@ -10,3 +10,45 @@
     font-weight: 400;
     src: url('./fonts/chintzys.ttf') format('truetype');
 }
+@font-face {
+    font-family: 'OpenSans';
+    font-style: normal;
+    font-weight: 400;
+    src: url('./fonts/OpenSans-VariableFont_wdth\,wght.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'OpenSans';
+    font-style: italic;
+    font-weight: 400;
+    src: url('./fonts/OpenSans-Italic-VariableFont_wdth\,wght.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'Technology';
+    font-style: normal;
+    font-weight: 400;
+    src: url('./fonts/Technology.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'Technology';
+    font-style: normal;
+    font-weight: 700;
+    src: url('./fonts/Technology-Bold.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'Technology';
+    font-style: italic;
+    font-weight: 700;
+    src: url('./fonts/Technology-BoldItalic.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'Technology';
+    font-style: italic;
+    font-weight: 400;
+    src: url('./fonts/Technology-Italic.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'Terminator';
+    font-style: normal;
+    font-weight: 400;
+    src: url('./fonts/terminator_real_nfi.ttf') format('truetype');
+}
