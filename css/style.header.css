@@ -1,0 +1,31 @@
+#navbar {
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--very-dark);
+    box-shadow:
+        554px 0 0 var(--very-dark),
+        -554px 0 0  var(--very-dark),
+        554px 0 4px 4px rgba(31,41,55,0.33),
+        -554px 0 4px 4px  rgba(31,41,55,0.33);
+}
+
+.logo-title {
+    font-family: 'Chintzy', sans-serif;
+    font-size: 58px;
+    letter-spacing: 5px;
+    color: var(--dark-accent);
+    text-shadow:
+        0 calc(1px * 0.5) 0 var(--medium-dark),
+        0 calc(1px * 1) 0 var(--medium-dark),
+        0 calc(1px * 1.5) 0 var(--medium-dark),
+        0 calc(1px * 2) 0 var(--medium-dark),
+        0 calc(1px * 2.5) 0 var(--medium-dark),
+        0 calc(1px * 3) 0 var(--medium-dark),
+        0 calc(1px * 3.5) 0 var(--medium-dark),
+        -1px calc(-1px * 1) 0 var(--medium-dark),
+        calc(-1px * 1) 1px 0 var(--medium-dark),
+        calc(1px * 1) -1px 0 var(--medium-dark)
+    ;
+}

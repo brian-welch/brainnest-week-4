@@ -1,0 +1,99 @@
+footer {
+    background-color: var(--very-dark);
+    box-shadow:
+        50vw 0 0 var(--very-dark),
+        -50vw 0 0 var(--very-dark);
+    color: var(--beige);
+    font-size: 15px;
+    padding: 25px 0;
+}
+
+.footer-columns {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    font-size: 15px;
+}
+
+.footer-columns > div {
+    font-size: 15px;
+    box-shadow:
+        0 2px 0 rgba(249,250,248,0.2);
+    background: var(--very-dark);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: first baseline;
+    padding: 20px 0;
+}
+
+.footer-columns ul > li {
+    font-size: 15px;
+    margin: 0 40px;
+    text-align: left;
+    text-decoration: none;
+    list-style: circle;
+    color: var(--beige);
+}
+
+#leftFooterColumn {
+    font-size: 15px;
+    flex: 1;
+    text-align: center;
+    color: var(--beige);
+}
+
+#centerFooterColumn {
+    font-size: 15px;
+    flex: 1;
+    text-align: center;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: center;
+    color: var(--beige);
+}
+
+#centerFooterColumn > .so-me-icon {
+    margin: 0 10px;
+    display: flex;
+    font-size: 2em;
+    color: var(--beige);
+}
+
+#rightFooterColumn {
+    font-size: 15px;
+    flex: 1;
+    text-align: center;
+    color: var(--beige);
+}
+
+#rightFooterColumn > a {
+    text-decoration: none;
+    color: rgba(249,250,248,0.7);
+    border-radius: 7px;
+    box-shadow: 0 0 0 1px rgba(249,250,248,0.7);
+    padding: 5px 20px;
+    color: var(--beige);
+}
+
+#rightFooterColumn > a > i {
+    position: relative;
+    bottom: -2px;
+    color: var(--beige);
+}
+
+#footerDisclaimer {
+    font-size: 15px;
+    text-align: center;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-around;
+    height: 40px;
+    color: var(--beige);
+}
+
+#footerDisclaimer > span {
+    font-size: 15px;
+    color: inherit;
+}

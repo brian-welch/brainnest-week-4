@@ -1,0 +1,10 @@
+:root {
+    --very-dark: rgba(0, 18, 25,1);
+    --medium-dark: rgba(31, 107, 122,1);
+    --dark-accent: rgba(71, 152, 154,1);
+    --dark-accent-light: rgba(148, 200, 201,1);
+    --light-accent: rgba(222,159,43,1);
+    --beige: rgba(220,216,193,1);
+    --cyberdyne-red: rgba(148,0,0,1);
+    --warning-accent: rgb(202, 113, 113);
+}
