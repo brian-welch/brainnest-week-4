@@ -181,7 +181,7 @@
 }
 
 #memoryMessage, #exponentMessage, #sqrtMessage {
-    opacity: 0.08;
+    opacity: 0.02;
 }
 
 #memoryMessage.opacity-one, #exponentMessage.opacity-one, #sqrtMessage.opacity-one {
@@ -288,6 +288,7 @@
         inset 20px 50px 70px rgba(0,0,0,0.1);
     scroll-behavior: smooth;
     overflow-y: scroll;
+    overflow-x: hidden;
     max-height: 306px;
     max-width: 190px;
 }

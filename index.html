@@ -25,7 +25,7 @@
                     <i class="fa-solid fa-circle-info"></i>
                 </button>
                 <div id="functionInfo" class="">
-                    <li><i class="fa-solid fa-delete-left"></i> : Deletes the calculator's output</li>
+                    <li><i class="fa-solid fa-delete-left"></i> : Resets the calculator</li>
                     <li><span class="exponent-text">y<sup>x</sup></span> : Enter any number, then this exponent button then enter the exponent value</li>
                     <li><i class="fa-solid fa-square-root-variable"></i> : Get the square root of any number in the calculator's output</li>
                     <li><i class="fa-solid fa-ban"></i> : Clear out the history log on the lower right</li>
@@ -49,9 +49,6 @@
                             <span id="memoryMessage">M</span>
                             <span id="exponentMessage">EXP</span>
                         </div>
-                        <!-- <div class="digit-row-undershading">
-                            8.8.8.8.8.8.8.8.8.8.8.
-                        </div> -->
                         <div class="digit-row"></div>
                     </div>
                     <div id="controlCenter">
@@ -73,10 +70,10 @@
                                 </button>
                             </div>
                             <div id="btnRow02" class="button-row">
-                                <button data-type="admin" data-value="mem-recall" data-ignore-history="0" data-history-symbol="" class="calcButton">
+                                <button data-type="admin" data-value="mem-unsave" data-ignore-history="0" data-history-symbol="" class="calcButton">
                                     <i class="fa-regular fa-trash-can"></i>
                                 </button>
-                                <button data-type="admin" data-value="mem-unsave" data-ignore-history="0" data-history-symbol="" class="calcButton">
+                                <button data-type="admin" data-value="mem-recall" data-ignore-history="0" data-history-symbol="" class="calcButton">
                                     <i class="fa-solid fa-arrow-right-from-bracket"></i>
                                 </button>
                                 <button data-type="admin" data-value="mem-save" data-ignore-history="0" data-history-symbol="" class="calcButton">
@@ -146,18 +143,6 @@
                         </div>    
                         <div id="calcHistoryContainer">
                             <div id="historyRoll">
-                                <!-- <li>one expression one expression</li>
-                                <li>two expression</li>
-                                <li>three expression</li>
-                                <li>four expression</li>
-                                <li>one expression one expression</li>
-                                <li>two expression</li>
-                                <li>three expression</li>
-                                <li>four expression</li>
-                                <li>one expression one expression</li>
-                                <li>two expression</li>
-                                <li>three expression</li>
-                                <li>four expression</li> -->
                             </div>
                         </div>
                     </div>
@@ -165,7 +150,6 @@
 
             </section>
         </main>
-
         <footer>
             <div class="footer-columns">
                 <div id="leftFooterColumn">
