@@ -5,8 +5,40 @@ const divide     = (x, y) => x / y;
 const exponent   = (x, y) => x ** y;
 const squareroot = (x) => Math.sqrt(x);
 
+const infobutton         = document.getElementById("infoButton");
+const clearScreenButton  = document.querySelector('[data-value="clear"]');
+const clearHistoryButton = document.querySelector('[data-value="clear-history"]');
+const exponentButton     = document.querySelector('[data-value="exponent"]');
+const sqrtButton         = document.querySelector('[data-value="squareroot"]');
+const saveMemoryButton   = document.querySelector('[data-value="mem-save"]');
+const unsaveMemoryButton = document.querySelector('[data-value="mem-unsave"]');
+const plusMinusButton    = document.querySelector('[data-value="plus-minus"]');
+
+const calcButtons        = document.getElementsByClassName("calcButton");
+const historyRoll        = document.getElementById("historyRoll");
+const infoBox            = document.getElementById("functionInfo");
+const calculatorOutput   = document.querySelector(".digit-row");
+const exponentMessage    = document.getElementById("exponentMessage");
+const sqrtMessage        = document.getElementById("sqrtMessage");
+const memoryMessage      = document.getElementById("memoryMessage");
+
+let result = '', memory = 0, activeHistoryLine = 0, decimalEntered = 0, x = '', y = '';
+let exp = false, sqrt = false, executed = true, actionLogged = false, newStart = true, plusMinusSet = false;
+let historyLine = document.createElement('li');
+
 const setActionLogged = (value) => {
     value == 'execute' ? actionLogged = 'restart' : actionLogged = value;
+}
+
+const decimalHandler = (dataValue) => {
+    return (dataValue == '.' && calculatorOutput.length == 0) ? '0' + dataValue : dataValue;
+}
+
+const resetCalculator = () => {
+    calculatorOutput.innerText = '', result = '', x = '', y = '',
+    result = '', memory = 0, activeHistoryLine = 0, decimalEntered = 0,
+    x = '', y = '', exp = false, sqrt = false, executed = true, actionLogged = false;
+    historyLine = document.createElement('li');
 }
 
 const calcRouter = (a, b, actionLogged, dataValue) => {
@@ -47,10 +79,6 @@ const calcRouter = (a, b, actionLogged, dataValue) => {
             historyLine = document.createElement('li');
             calculatorOutput.innerText = result.substring(0,14);
             break;
-        // case 'plus-minus':
-        //     result = (parseFloat(result) * (-1)).toString().substring(0,14);
-        //     setActionLogged('execute');
-        //     break;
         default:
             result = a;
             setActionLogged('execute');
@@ -58,31 +86,6 @@ const calcRouter = (a, b, actionLogged, dataValue) => {
       }
       x = result, y = '';
 }
-
-const calcButtons        = document.getElementsByClassName("calcButton");
-const historyRoll        = document.getElementById("historyRoll");
-const infobutton         = document.getElementById("infoButton");
-const infoBox            = document.getElementById("functionInfo");
-const clearScreenButton  = document.querySelector('[data-value="clear"]');
-const clearHistoryButton = document.querySelector('[data-value="clear-history"]');
-const calculatorOutput   = document.querySelector(".digit-row");
-
-const exponentButton     = document.querySelector('[data-value="exponent"]');
-const sqrtButton         = document.querySelector('[data-value="squareroot"]');
-const saveMemoryButton   = document.querySelector('[data-value="mem-save"]');
-const unsaveMemoryButton = document.querySelector('[data-value="mem-unsave"]');
-const plusMinusButton    = document.querySelector('[data-value="plus-minus"]');
-
-const exponentMessage    = document.getElementById("exponentMessage");
-const sqrtMessage        = document.getElementById("sqrtMessage");
-const memoryMessage      = document.getElementById("memoryMessage");
-
-
-let result = '', memory = 0, activeHistoryLine = 0, decimalEntered = 0, x = '', y = '';
-let exp = false, sqrt = false, executed = true, actionLogged = false, newStart = true, plusMinusSet = false;
-
-let historyLine = document.createElement('li');
-
 
 const addToHistory = (event) => {
     let dataValue = event.currentTarget.dataset.value;
@@ -130,17 +133,6 @@ const calculate = (event) => {
     } 
 }
 
-const decimalHandler = (dataValue) => {
-    return (dataValue == '.' && calculatorOutput.length == 0) ? '0' + dataValue : dataValue;
-}
-
-const resetCalculator = () => {
-    calculatorOutput.innerText = '', result = '', x = '', y = '',
-    result = '', memory = 0, activeHistoryLine = 0, decimalEntered = 0,
-    x = '', y = '', exp = false, sqrt = false, executed = true, actionLogged = false;
-    historyLine = document.createElement('li');
-}
-
 // EVENT LISTENERS
 
 infobutton.addEventListener('click', (event) => { infoBox.classList.toggle('info-toggle'); });
@@ -166,17 +158,13 @@ plusMinusButton.addEventListener('click', (event) => {
     historyLine.innerText = temp.substring(0,temp.length-1) + '-' + temp[-1,temp.length-1];;
 });
 
-
 for (let i = 0; i < calcButtons.length; i++) {
     calcButtons[i].addEventListener('click', (event) => {
-        // need consistent access to data attributes of button -> event.currentTarget.dataset
         calculate(event);
         addToOutput(event);
         addToHistory(event);
     });
 }
-
-
 
 window.onload = (event) => {
     let options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
