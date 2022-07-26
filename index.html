@@ -48,99 +48,97 @@
                         <div class="mssg-row">
                             <span id="memoryMessage">M</span>
                             <span id="exponentMessage">EXP</span>
-                            <span id="exponentMessage">SQRT</span>
                         </div>
-                        <div class="digit-row-undershading">
-                            8<span class="decimal">.</span>8<span class="decimal">.</span>8<span class="decimal">.</span>8<span class="decimal">.</span>8<span class="decimal">.</span>8<span class="decimal">.</span>8<span class="decimal">.</span>8<span class="decimal">.</span>8<span class="decimal">.</span>8<span class="decimal">.</span>8
-                        </div>
-                        <div class="digit-row">-<span class="one-spacer"></span>8<span class="decimal">.</span>8<span class="decimal">.</span><span class="one-spacer"></span>1<span class="decimal">.</span>8<span class="decimal">.</span>8<span class="decimal">.</span>8<span class="decimal">.</span>8<span class="decimal">.</span>8<span class="decimal">.</span>8<span class="decimal">.</span>8</div>
+                        <!-- <div class="digit-row-undershading">
+                            8.8.8.8.8.8.8.8.8.8.8.
+                        </div> -->
+                        <div class="digit-row"></div>
                     </div>
                     <div id="controlCenter">
                         <div id="calcButtonsContainer">
                             <div id="btnRow01" class="button-row">
-                                <button title="" data-type="action" data-value="clear" data-ignore-history="1" data-history-symbol="" class="calcButton">
+                                <button data-type="admin" data-value="clear" data-ignore-history="1" data-history-symbol="" class="calcButton">
                                     <i class="fa-solid fa-delete-left"></i>
                                 </button>
-                                <button title="" data-type="action" data-value="exponent" data-ignore-history="1" data-history-symbol="" class="calcButton">
+                                <button data-type="action" data-value="exponent" data-ignore-history="1" data-history-symbol="^" class="calcButton">
                                      <span class="exponent-text">
                                          y<sup>x</sup>
                                      </span>
                                 </button>
-                                <button title="" data-type="action" data-value="squareroot" data-ignore-history="0" data-history-symbol="√" class="calcButton">
+                                <button data-type="direct" data-value="squareroot" data-ignore-history="0" data-history-symbol="√" class="calcButton">
                                     <i class="fa-solid fa-square-root-variable"></i>
                                 </button>
-                                <button title="" data-type="action" data-value="clear-history" data-ignore-history="1" data-history-symbol="" class="calcButton">
+                                <button data-type="admin" data-value="clear-history" data-ignore-history="1" data-history-symbol="" class="calcButton">
                                     <i class="fa-solid fa-ban"></i>
                                 </button>
                             </div>
                             <div id="btnRow02" class="button-row">
-                                <button title="" data-type="action" data-value="mem-recall" data-ignore-history="0" data-history-symbol="" class="calcButton">
+                                <button data-type="admin" data-value="mem-recall" data-ignore-history="0" data-history-symbol="" class="calcButton">
                                     <i class="fa-regular fa-trash-can"></i>
                                 </button>
-                                <button title="" data-type="action" data-value="mem-unsave" data-ignore-history="0" data-history-symbol="" class="calcButton">
+                                <button data-type="admin" data-value="mem-unsave" data-ignore-history="0" data-history-symbol="" class="calcButton">
                                     <i class="fa-solid fa-arrow-right-from-bracket"></i>
                                 </button>
-                                <button title="" data-type="action" data-value="mem-save" data-ignore-history="0" data-history-symbol="" class="calcButton">
+                                <button data-type="admin" data-value="mem-save" data-ignore-history="0" data-history-symbol="" class="calcButton">
                                     <i class="fa-solid fa-arrow-right-to-bracket"></i>
                                 </button>
-                                <button title="" data-type="action" data-value="plus-minus" data-ignore-history="0" data-history-symbol="" class="calcButton">
+                                <button data-type="admin" data-value="plus-minus" data-ignore-history="0" data-history-symbol="" class="calcButton">
                                     <i class="fa-solid fa-plus-minus"></i>
                                 </button>
                             </div>
                             <div id="btnRow03" class="button-row">
-                                <button title="" data-type="input" data-value="7" data-ignore-history="0" data-history-symbol="7" class="calcButton">
+                                <button data-type="input" data-value="7" data-ignore-history="0" data-history-symbol="7" class="calcButton">
                                     <i class="fa-solid fa-7"></i>
                                 </button>
-                                <button title="" data-type="input" data-value="8" data-ignore-history="0" data-history-symbol="8" class="calcButton">
+                                <button data-type="input" data-value="8" data-ignore-history="0" data-history-symbol="8" class="calcButton">
                                     <i class="fa-solid fa-8"></i>
                                 </button>
-                                <button title="" data-type="input" data-value="9" data-ignore-history="0" data-history-symbol="9" class="calcButton">
+                                <button data-type="input" data-value="9" data-ignore-history="0" data-history-symbol="9" class="calcButton">
                                     <i class="fa-solid fa-9"></i>
                                 </button>
-                                <button title="" data-type="action" data-value="divide" data-ignore-history="0" data-history=" / "
-                                    class="calcButton">
+                                <button data-type="action" data-value="divide" data-ignore-history="0" data-history-symbol=" / " class="calcButton">
                                     <i class="fa-solid fa-divide"></i>
                                 </button>
                             </div>
                             <div id="btnRow04" class="button-row">
-                                <button title="" data-type="input" data-value="4" data-ignore-history="0" data-history-symbol="4" class="calcButton">
+                                <button data-type="input" data-value="4" data-ignore-history="0" data-history-symbol="4" class="calcButton">
                                     <i class="fa-solid fa-4"></i>
                                 </button>
-                                <button title="" data-type="input" data-value="5" data-ignore-history="0" data-history-symbol="5" class="calcButton">
+                                <button data-type="input" data-value="5" data-ignore-history="0" data-history-symbol="5" class="calcButton">
                                     <i class="fa-solid fa-5"></i>
                                 </button>
-                                <button title="" data-type="input" data-value="6" data-ignore-history="0" data-history-symbol="6" class="calcButton">
+                                <button data-type="input" data-value="6" data-ignore-history="0" data-history-symbol="6" class="calcButton">
                                     <i class="fa-solid fa-6"></i>
                                 </button>
-                                <button title="" data-type="action" data-value="multiply" data-ignore-history="0" data-history-symbol=" x " class="calcButton">
+                                <button data-type="action" data-value="multiply" data-ignore-history="0" data-history-symbol=" x " class="calcButton">
                                     <i class="fa-solid fa-xmark"></i>
                                 </button>
                             </div>
                             <div id="btnRow05" class="button-row">
-                                <button title="" data-type="input" data-value="1" data-ignore-history="0" data-history-symbol="1" class="calcButton">
+                                <button data-type="input" data-value="1" data-ignore-history="0" data-history-symbol="1" class="calcButton">
                                     <i class="fa-solid fa-1"></i>
                                 </button>
-                                <button title="" data-type="input" data-value="2" data-ignore-history="0" data-history-symbol="2" class="calcButton">
+                                <button data-type="input" data-value="2" data-ignore-history="0" data-history-symbol="2" class="calcButton">
                                     <i class="fa-solid fa-2"></i>
                                 </button>
-                                <button title="" data-type="input" data-value="3" data-ignore-history="0" data-history-symbol="3" class="calcButton">
+                                <button data-type="input" data-value="3" data-ignore-history="0" data-history-symbol="3" class="calcButton">
                                     <i class="fa-solid fa-3"></i>
                                 </button>
-                                <button title="" data-type="action" data-value="subtract" data-ignore-history="0" data-history-symbol=" - " class="calcButton">
+                                <button data-type="action" data-value="subtract" data-ignore-history="0" data-history-symbol=" - " class="calcButton">
                                     <i class="fa-solid fa-minus"></i>
                                 </button>
                             </div>
                             <div id="btnRow06" class="button-row">
-                                <button title="" data-type="input" data-value="0" data-ignore-history="0" data-history-symbol="0" class="calcButton">
+                                <button data-type="input" data-value="0" data-ignore-history="0" data-history-symbol="0" class="calcButton">
                                     <i class="fa-solid fa-0"></i>
                                 </button>
-                                <button title="" data-type="input" data-value="." data-ignore-history="0" data-history-symbol="." class="calcButton">
+                                <button data-type="input" data-value="." data-ignore-history="0" data-history-symbol="." class="calcButton">
                                     <span>.</span>
                                 </button>
-                                <button title="" data-type="action" data-value="execute" data-ignore-history="0" data-history-symbol="" class="calcButton">
+                                <button data-type="action" data-value="execute" data-ignore-history="0" data-history-symbol="" class="calcButton">
                                     <i class="fa-solid fa-equals"></i>
                                 </button>
-                                <button title="" data-type="action" data-value="add" data-ignore-history="0" data-history-symbol=" + " class="calcButton">
+                                <button data-type="action" data-value="add" data-ignore-history="0" data-history-symbol=" + " class="calcButton">
                                     <i class="fa-solid fa-plus"></i>
                                 </button>
                             </div>

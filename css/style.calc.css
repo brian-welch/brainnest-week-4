@@ -1,7 +1,7 @@
 #functionInfo {
     position: absolute;
     width: 500px;
-    height: 549px;
+    height: 555px;
     padding: 40px;
     border-radius: 25px;
     background: red;
@@ -56,6 +56,24 @@
     margin-left: -575px;
     border: var(--medium-dark) 2px solid;
     background-color: var(--beige);
+    box-shadow:
+        0 0 0 -1px var(--beige),
+        0 0 0 -1px var(--light-accent),
+        0 0 0 -1px var(--beige),
+        0 0 0 -1px var(--light-accent),
+        0 0 0 -1px var(--beige),
+        0 0 0 -1px var(--light-accent);
+    transition: all 150ms ease-out;
+}
+
+#infoButton:hover {
+    box-shadow:
+        0 0 0 2px var(--beige),
+        0 0 0 4px var(--light-accent),
+        0 0 0 6px var(--beige),
+        0 0 0 7px var(--light-accent),
+        0 0 0 9px var(--beige),
+        0 0 0 calc(1px * 9.5) var(--light-accent);
 }
 
 #infoButton > i {
@@ -162,8 +180,12 @@
     line-height: 1em;;
 }
 
-#memoryMessage, #exponentMessage {
+#memoryMessage, #exponentMessage, #sqrtMessage {
     opacity: 0.08;
+}
+
+#memoryMessage.opacity-one, #exponentMessage.opacity-one, #sqrtMessage.opacity-one {
+    opacity: 1 !important;
 }
 
 .mssg-row > span {
@@ -182,11 +204,14 @@
 .digit-row, .digit-row-undershading {
     font-family: inherit;
     font-size: 56px;
-    line-height: 35px;
-    letter-spacing: 2px;
+    line-height: 56px;
+    letter-spacing: 5px;
     text-align: right;
-    /* outline: red 1px solid; */
-    margin-top: 13px;
+    padding-top: 10px;
+}
+
+.digit-row {
+    height: 56px;
 }
 
 .digit-row-undershading {
@@ -201,6 +226,18 @@
     font-size: 52px;
 }
 
+.digit-row > .decimal.new {
+    position: absolute;
+    font-size: 52;
+    opacity: 1;
+    color: red;
+}
+
+.digit-row > .decimal.new::before {
+    content: ".";
+    margin-left: -2px;
+}
+
 .digit-row > .decimal {
     opacity: 0;
 }
@@ -209,9 +246,13 @@
     opacity: 1;
 }
 
-.one-spacer {
+.digit-spacer {
     display: inline-block;
     width: 16px;
+}
+.decimal-sacer {
+    display: inline-block;
+    width: 10px;
 }
 
 /******************  CALC BUTTONS  ******************/
@@ -246,10 +287,9 @@
         0 1px 0 rgba(242,246,248,0.85),
         inset 20px 50px 70px rgba(0,0,0,0.1);
     scroll-behavior: smooth;
-    /* scrollbar-color: var(--medium-dark); */
-    /* scrollbar-color: var(--beige) var(--medium-dark); */
     overflow-y: scroll;
     max-height: 306px;
+    max-width: 190px;
 }
 
 #historyRoll::-webkit-scrollbar {
