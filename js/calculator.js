@@ -10,9 +10,10 @@ const clearScreenButton  = document.querySelector('[data-value="clear"]');
 const clearHistoryButton = document.querySelector('[data-value="clear-history"]');
 const exponentButton     = document.querySelector('[data-value="exponent"]');
 const sqrtButton         = document.querySelector('[data-value="squareroot"]');
-const saveMemoryButton   = document.querySelector('[data-value="mem-save"]');
-const unsaveMemoryButton = document.querySelector('[data-value="mem-unsave"]');
 const plusMinusButton    = document.querySelector('[data-value="plus-minus"]');
+const saveMemoryButton   = document.querySelector('[data-value="mem-save"]');
+const recallMemoryButton = document.querySelector('[data-value="mem-recall"]');
+const unsaveMemoryButton = document.querySelector('[data-value="mem-unsave"]');
 
 const calcButtons        = document.getElementsByClassName("calcButton");
 const historyRoll        = document.getElementById("historyRoll");
@@ -36,9 +37,9 @@ const decimalHandler = (dataValue) => {
 
 const resetCalculator = () => {
     calculatorOutput.innerText = '', result = '', x = '', y = '',
-    result = '', memory = 0, activeHistoryLine = 0, decimalEntered = 0,
+    result = '', activeHistoryLine = 0, decimalEntered = 0,
     x = '', y = '', exp = false, sqrt = false, executed = true, actionLogged = false;
-    historyLine = document.createElement('li');
+    historyLine = document.createElement('li'), console.clear();
 }
 
 const calcRouter = (a, b, actionLogged, dataValue) => {
@@ -87,36 +88,6 @@ const calcRouter = (a, b, actionLogged, dataValue) => {
       x = result, y = '';
 }
 
-const addToHistory = (event) => {
-    let dataValue = event.currentTarget.dataset.value;
-    let dataIgnore = parseInt(event.currentTarget.dataset.historyIgnore);
-    let dataSymbol = event.currentTarget.dataset.historySymbol;
-
-    if (dataValue == 'execute' && historyLine != '') {
-        historyLine.append(" = " + result);
-        historyRoll.append(historyLine);
-        historyLine = document.createElement('li');
-    }
-    if (!dataIgnore) {
-        historyLine.append(dataSymbol);
-    }
-    // result = '';
-    console.log(`result: ${result}, x: ${x}, y: ${y}, actionLogged: ${actionLogged}, plusMinusSet: ${plusMinusSet}`)
-}
-
-const addToOutput = (event) => {
-    let dataValue = event.currentTarget.dataset.value;
-    let dataType = event.currentTarget.dataset.type;
-    if (dataType == 'input') {
-        executed ? (calculatorOutput.innerText = '', executed = false) : null;
-        calculatorOutput.append(decimalHandler(dataValue));
-        calculatorOutput.innerText = calculatorOutput.innerText.substring(0,14);
-    } else if (dataType == 'action') {
-        result ? calculatorOutput.innerText = result : null;
-        executed = true;
-    }
-}
-
 const calculate = (event) => {
     let dataValue = event.currentTarget.dataset.value;
     let dataType = event.currentTarget.dataset.type;
@@ -133,15 +104,58 @@ const calculate = (event) => {
     } 
 }
 
+const addToOutput = (event) => {
+    let dataValue = event.currentTarget.dataset.value;
+    let dataType = event.currentTarget.dataset.type;
+    if (dataType == 'input') {
+        executed ? (calculatorOutput.innerText = '', executed = false) : null;
+        calculatorOutput.append(decimalHandler(dataValue));
+        calculatorOutput.innerText = calculatorOutput.innerText.substring(0,14);
+    } else if (dataType == 'action') {
+        result ? calculatorOutput.innerText = result : null;
+        executed = true;
+    }
+}
+
+
+const addToHistory = (event) => {
+    let dataValue = event.currentTarget.dataset.value;
+    let dataIgnore = parseInt(event.currentTarget.dataset.historyIgnore);
+    let dataSymbol = event.currentTarget.dataset.historySymbol;
+
+    if (dataValue == 'execute' && historyLine != '') {
+        historyLine.append(" = " + result);
+        historyRoll.append(historyLine);
+        historyLine = document.createElement('li');
+    }
+    if (!dataIgnore) {
+        historyLine.append(dataSymbol);
+    }
+    console.log(`result: ${result}, x: ${x}, y: ${y}, actionLogged: ${actionLogged}, plusMinusSet: ${plusMinusSet}`);
+}
+
 // EVENT LISTENERS
 
 infobutton.addEventListener('click', (event) => { infoBox.classList.toggle('info-toggle'); });
 clearScreenButton.addEventListener('click', (event) => { resetCalculator(); });
 clearHistoryButton.addEventListener('click', (event) => { historyRoll.innerText = ''; });
-
 exponentButton.addEventListener('click', (event) => { exponentMessage.classList.add('opacity-one'); });
-saveMemoryButton.addEventListener('click', (event) => { memoryMessage.classList.add('opacity-one'); });
-unsaveMemoryButton.addEventListener('click', (event) => { memoryMessage.classList.remove('opacity-one'); });
+saveMemoryButton.addEventListener('click', (event) => {
+    memoryMessage.classList.add('opacity-one'), memory = calculatorOutput.innerText;
+});
+unsaveMemoryButton.addEventListener('click', (event) => {
+    memoryMessage.classList.remove('opacity-one'), memory = '';
+});
+recallMemoryButton.addEventListener('click', (event) => {
+    actionLogged == 'restart' ? (x = '', actionLogged = false) : null;
+    !actionLogged ? x += memory : y += memory;
+    x = x.substring(0,14), y = y.substring(0,14);
+    executed ? (calculatorOutput.innerText = '', executed = false) : null;
+    calculatorOutput.append(memory);
+    calculatorOutput.innerText = calculatorOutput.innerText.substring(0,14);
+    historyLine.append(memory);
+    console.log(`result: ${result}, x: ${x}, y: ${y}, actionLogged: ${actionLogged}, plusMinusSet: ${plusMinusSet}`);
+});
 plusMinusButton.addEventListener('click', (event) => {
     if (y.length > 0) {
         y = (parseFloat(y) * (-1)).toString().substring(0,14);
