@@ -9,7 +9,6 @@ const infobutton         = document.getElementById("infoButton");
 const clearScreenButton  = document.querySelector('[data-value="clear"]');
 const clearHistoryButton = document.querySelector('[data-value="clear-history"]');
 const exponentButton     = document.querySelector('[data-value="exponent"]');
-const sqrtButton         = document.querySelector('[data-value="squareroot"]');
 const plusMinusButton    = document.querySelector('[data-value="plus-minus"]');
 const saveMemoryButton   = document.querySelector('[data-value="mem-save"]');
 const recallMemoryButton = document.querySelector('[data-value="mem-recall"]');
@@ -20,7 +19,6 @@ const historyRoll        = document.getElementById("historyRoll");
 const infoBox            = document.getElementById("functionInfo");
 const calculatorOutput   = document.querySelector(".digit-row");
 const exponentMessage    = document.getElementById("exponentMessage");
-const sqrtMessage        = document.getElementById("sqrtMessage");
 const memoryMessage      = document.getElementById("memoryMessage");
 
 let result = '', placeHolder = '', memory = '', x = '', y = '', dotsAndZerosString = '';
@@ -112,7 +110,6 @@ const calcRouter = (a, b, actionLogged, dataValue) => {
             !parseFloat(b) ? b = 0 : b = parseFloat(b);
             result = isFinite(squareroot(a + b)) ? longOutputSantizer(squareroot(a + b)): "goofy";
             setActionLogged(dataValue);
-            sqrtMessage.classList.remove('opacity-one');
             break;
         default:
             result = a;
@@ -198,7 +195,6 @@ infobutton.addEventListener('click', (event) => { infoBox.classList.toggle('info
 clearScreenButton.addEventListener('click', (event) => { resetCalculator(); });
 clearHistoryButton.addEventListener('click', (event) => { historyRoll.innerText = ''; });
 exponentButton.addEventListener('click', (event) => { exponentMessage.classList.add('opacity-one'); });
-sqrtButton.addEventListener('click', (event) => { sqrtMessage.classList.add('opacity-one'); });
 unsaveMemoryButton.addEventListener('click', (event) => { memoryMessage.classList.remove('opacity-one'), memory = ''; });
 
 saveMemoryButton.addEventListener('click', (event) => {
