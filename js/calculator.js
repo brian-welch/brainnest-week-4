@@ -23,8 +23,8 @@ const exponentMessage    = document.getElementById("exponentMessage");
 const sqrtMessage        = document.getElementById("sqrtMessage");
 const memoryMessage      = document.getElementById("memoryMessage");
 
-let result = '', memory = 0, activeHistoryLine = 0, decimalEntered = 0, x = '', y = '';
-let exp = false, sqrt = false, executed = true, actionLogged = false, newStart = true, plusMinusSet = false;
+let result = '', placeHolder = '', memory = '', x = '', y = '', dotsAndZerosString = '';
+let exp = false, executed = true, actionLogged = false, plusMinusSet = false, ignoreX = false;
 let historyLine = document.createElement('li');
 
 const setActionLogged = (value) => {
@@ -32,53 +32,87 @@ const setActionLogged = (value) => {
 }
 
 const decimalHandler = (dataValue) => {
-    return (dataValue == '.' && calculatorOutput.length == 0) ? '0' + dataValue : dataValue;
+    return (dataValue == '.' && calculatorOutput.innerText.length == 0) ? '0' + dataValue : dataValue;
+}
+
+const dotsAndZerosStringCheck = (value) => {
+    let temp = true;
+    if (value === '.') {
+        temp = dotsAndZerosString.split('').indexOf('.') > -1 ? false : true;
+    } else if (value === '0') {
+        temp = (dotsAndZerosString == '0') ? false : true;
+    }
+    return temp;
 }
 
 const resetCalculator = () => {
-    calculatorOutput.innerText = '', result = '', x = '', y = '',
-    result = '', activeHistoryLine = 0, decimalEntered = 0,
-    x = '', y = '', exp = false, sqrt = false, executed = true, actionLogged = false;
-    historyLine = document.createElement('li'), console.clear();
+    calculatorOutput.innerText = '', result = '', x = '', y = '', result = '', placeHolder = '',
+    exp = false, executed = true, actionLogged = false, ignoreX = false;
+    historyLine = document.createElement('li'), dotsAndZerosString = '', console.clear();
+    exponentMessage.classList.remove('opacity-one');
+}
+
+const trailingDecimalCheck = (output) => {
+    return output[output.length-1] == '.' ? output.replace('.', '') : output;
+}
+
+const longOutputSantizer = (output) => {
+    let temp = '';
+    let exp = output < 0 ? output.toString().length-2 : output.toString().length-1;
+    if (output.toString().indexOf('e') > -1) {
+        let arr = output.toString().split('e');
+        temp = (arr[0].substring(0, 14 - (2 + arr[1].length)) + 'e' + arr[1]);
+    } else if (output.toString().length > 14 && output.toString().indexOf('e') == -1) {
+        if (Math.abs(output) > 99999999999999) {
+            temp = (output/Math.pow(10,exp)).toString().substring(0, 14 - (2 + exp.toString().length)) + 'e+' + exp;
+        } else {
+            temp = output.toString().substring(0, 14);
+        }
+    } else {
+        temp = output.toString().substring(0, 14);
+    }
+    return trailingDecimalCheck(temp);
 }
 
 const calcRouter = (a, b, actionLogged, dataValue) => {
     switch(actionLogged) {
         case 'add':
-            !parseFloat(b) ? (a = parseFloat(a), b = 0) : (a = parseFloat(a), b = parseFloat(b));
-            result = add(a, b).toString().substring(0,14);
+            !parseFloat(a) && parseInt(a) != 0 ? a = 0 : a = parseFloat(a);
+            !parseFloat(b) ? b = 0 : b = parseFloat(b);
+            result = longOutputSantizer(add(a, b));
             setActionLogged(dataValue);
             break;
         case 'subtract':
-            !parseFloat(b) ? (a = parseFloat(a), b = 0) : (a = parseFloat(a), b = parseFloat(b));
-            result = subtract(a, b).toString().substring(0,14);
+            !parseFloat(a) && parseInt(a) != 0 ? a = 0 : a = parseFloat(a);
+            !parseFloat(b) ? b = 0 : b = parseFloat(b);
+            result = longOutputSantizer(subtract(a, b));
             setActionLogged(dataValue);
             break;
           case 'multiply':
-            !parseFloat(b) ? (a = parseFloat(a), b = 1) : (a = parseFloat(a), b = parseFloat(b));
-            result = multiply(a, b).toString().substring(0,14);
+            !parseFloat(a) && parseInt(a) != 0 ? a = 0 : a = parseFloat(a);
+            !parseFloat(b) && b != '0' ? b = 1 : b = parseFloat(b);
+            result = longOutputSantizer(multiply(a, b));
             setActionLogged(dataValue);
             break;
         case 'divide':
-            !parseFloat(b) ? (a = parseFloat(a), b = 0) : (a = parseFloat(a), b = parseFloat(b));
-            result = divide(a, b) ? divide(a, b).toString().substring(0,14) : "ERROR";
+            !parseFloat(a) && parseInt(a) != 0 ? a = 0 : a = parseFloat(a);
+            !parseFloat(b) && b != '0' ? b = 1 : b = parseFloat(b);
+            result = isFinite(divide(a, b)) ? longOutputSantizer(divide(a, b)) : "IMPOSSIBLE";
             setActionLogged(dataValue);
             break;
         case 'exponent':
-            !parseFloat(b) ? (a = parseFloat(a), b = 1) : (a = parseFloat(a), b = parseFloat(b));
-            result = exponent(a, b).toString().substring(0,14);
+            !parseFloat(a) && parseInt(a) != 0 ? a = 0 : a = parseFloat(a);
+            !parseFloat(b) ? b = 0 : b = parseFloat(b);
+            result = isFinite(exponent(a, b)) ? longOutputSantizer(exponent(a, b)): "TOO DAMNED BIG";
             setActionLogged(dataValue);
             exponentMessage.classList.remove('opacity-one');
             break;
         case 'squareroot':
-            let num = b.length == 0 ? parseFloat(a) : parseFloat(b);
-            result = squareroot(num).toString().substring(0,14);
+            !parseFloat(a) && parseInt(a) != 0 ? a = 0 : a = parseFloat(a);
+            !parseFloat(b) ? b = 0 : b = parseFloat(b);
+            result = isFinite(squareroot(a + b)) ? longOutputSantizer(squareroot(a + b)): "goofy";
             setActionLogged(dataValue);
-            historyLine.innerText = '';
-            historyLine.append(" √" + a + " = " + result);
-            historyRoll.append(historyLine);
-            historyLine = document.createElement('li');
-            calculatorOutput.innerText = result.substring(0,14);
+            sqrtMessage.classList.remove('opacity-one');
             break;
         default:
             result = a;
@@ -86,52 +120,76 @@ const calcRouter = (a, b, actionLogged, dataValue) => {
             break;
       }
       x = result, y = '';
+      return result;
 }
 
 const calculate = (event) => {
     let dataValue = event.currentTarget.dataset.value;
     let dataType = event.currentTarget.dataset.type;
-    if (dataType == 'input') {
+    if (dataType == 'input' && dotsAndZerosStringCheck(dataValue)) {
         actionLogged == 'restart' ? (x = '', actionLogged = false) : null;
-        !actionLogged ? x += dataValue : y += dataValue;
-        x = x.substring(0,14), y = y.substring(0,14);
+        !actionLogged ? (x += decimalHandler(dataValue)) : (y += dataValue);
     } else if (dataType == 'action') {
-        actionLogged == 'restart' ? actionLogged = false : null;
+        historyLine.innerText += dotsAndZerosString;
+        dotsAndZerosString = '';
+        actionLogged == 'restart'? actionLogged = false : null;
         actionLogged ? calcRouter(x, y, actionLogged, dataValue) : actionLogged = dataValue;
     } else if (dataType == 'direct') {
-        // actionLogged ? calcRouter(x, y, actionLogged, dataValue) : actionLogged = dataValue;
-        calcRouter(x, y, dataValue, 'execute');
-    } 
+        historyLine.innerText += dotsAndZerosString;
+        dotsAndZerosString = '';
+        placeHolder = calcRouter(x, y, actionLogged, dataValue);
+        actionLogged = dataValue;
+        calcRouter(x, y, actionLogged, 'execute');
+    }
 }
 
 const addToOutput = (event) => {
     let dataValue = event.currentTarget.dataset.value;
     let dataType = event.currentTarget.dataset.type;
-    if (dataType == 'input') {
+    if (dataType == 'input' && dotsAndZerosStringCheck(dataValue)) {
         executed ? (calculatorOutput.innerText = '', executed = false) : null;
         calculatorOutput.append(decimalHandler(dataValue));
         calculatorOutput.innerText = calculatorOutput.innerText.substring(0,14);
-    } else if (dataType == 'action') {
-        result ? calculatorOutput.innerText = result : null;
+    } else if (dataType == 'action' || dataType == 'direct') {
+        dataValue == 'execute' ? calculatorOutput.innerText = result : calculatorOutput.innerText = x;
         executed = true;
     }
 }
 
-
 const addToHistory = (event) => {
+    let dataType = event.currentTarget.dataset.type;
     let dataValue = event.currentTarget.dataset.value;
     let dataIgnore = parseInt(event.currentTarget.dataset.historyIgnore);
     let dataSymbol = event.currentTarget.dataset.historySymbol;
+    let histLine = historyLine.innerText, histLineLen = historyLine.innerText.length;
 
-    if (dataValue == 'execute' && historyLine != '') {
-        historyLine.append(" = " + result);
-        historyRoll.append(historyLine);
-        historyLine = document.createElement('li');
+    if ((dataValue == 'execute' ||  dataValue == 'squareroot')&& historyLine != '') {
+        if (dataValue == 'squareroot') {
+            if (histLine.indexOf(' ') == -1){
+                historyLine.innerText = '';
+                historyLine.append(decimalHandler(dataSymbol) + dotsAndZerosString + placeHolder + ' = ' + result);
+                historyRoll.append(historyLine);
+                historyLine = document.createElement('li');
+            } else {
+                historyLine.append(" = " + placeHolder + "," + decimalHandler(dataSymbol) + dotsAndZerosString + placeHolder + ' = ' + result);
+                historyRoll.append(historyLine);
+                historyLine = document.createElement('li');
+            }
+        } else {
+            historyLine.append(" = " + result);
+            historyRoll.append(historyLine);
+            historyLine = document.createElement('li');
+        }
     }
-    if (!dataIgnore) {
-        historyLine.append(dataSymbol);
+    if (!dataIgnore && dotsAndZerosStringCheck(dataValue)) {
+        dataType == 'action' && histLine.substring(histLineLen - 3, histLineLen) != dataSymbol ?    
+            historyLine.append(dataSymbol) :
+            null;
+        dataType == "input" ?
+            dotsAndZerosString += decimalHandler(dataSymbol) :
+            null;
     }
-    console.log(`result: ${result}, x: ${x}, y: ${y}, actionLogged: ${actionLogged}, plusMinusSet: ${plusMinusSet}`);
+    console.log(`result(${typeof result}): ${result}, x(${typeof x}): ${x}, y(${typeof y}): ${y}, actionLogged: ${actionLogged}, dotsAndZerosString: ${dotsAndZerosString}\n\n`);
 }
 
 // EVENT LISTENERS
@@ -140,36 +198,41 @@ infobutton.addEventListener('click', (event) => { infoBox.classList.toggle('info
 clearScreenButton.addEventListener('click', (event) => { resetCalculator(); });
 clearHistoryButton.addEventListener('click', (event) => { historyRoll.innerText = ''; });
 exponentButton.addEventListener('click', (event) => { exponentMessage.classList.add('opacity-one'); });
+sqrtButton.addEventListener('click', (event) => { sqrtMessage.classList.add('opacity-one'); });
+unsaveMemoryButton.addEventListener('click', (event) => { memoryMessage.classList.remove('opacity-one'), memory = ''; });
+
 saveMemoryButton.addEventListener('click', (event) => {
-    memoryMessage.classList.add('opacity-one'), memory = calculatorOutput.innerText;
+    memoryMessage.classList.add('opacity-one');
+    parseFloat(calculatorOutput.innerText) ?
+        memory = calculatorOutput.innerText :
+        memoryMessage.classList.remove('opacity-one');
 });
-unsaveMemoryButton.addEventListener('click', (event) => {
-    memoryMessage.classList.remove('opacity-one'), memory = '';
-});
+
 recallMemoryButton.addEventListener('click', (event) => {
     actionLogged == 'restart' ? (x = '', actionLogged = false) : null;
     !actionLogged ? x += memory : y += memory;
+    console.log(`x type: ${typeof x}, y type: ${typeof y}`);
     x = x.substring(0,14), y = y.substring(0,14);
     executed ? (calculatorOutput.innerText = '', executed = false) : null;
     calculatorOutput.append(memory);
-    calculatorOutput.innerText = calculatorOutput.innerText.substring(0,14);
+    calculatorOutput.innerText = longOutputSantizer(calculatorOutput.innerText);
     historyLine.append(memory);
-    console.log(`result: ${result}, x: ${x}, y: ${y}, actionLogged: ${actionLogged}, plusMinusSet: ${plusMinusSet}`);
 });
+
 plusMinusButton.addEventListener('click', (event) => {
-    if (y.length > 0) {
+    if (!actionLogged && x.length == 0) {
+        null;
+    } else if (parseInt(x) && actionLogged && y.length == 0) {
+        null;
+    } else if (y.length > 0 && actionLogged) {
         y = (parseFloat(y) * (-1)).toString().substring(0,14);
-        calculatorOutput.innerText[0] == '-' ?
-            calculatorOutput.innerText = calculatorOutput.innerText.slice(1).substring(0,14) :
-            calculatorOutput.innerText = ('-' + calculatorOutput.innerText).substring(0,14);
+        calculatorOutput.innerText = (y);
+        dotsAndZerosString = dotsAndZerosString.slice(0,1) == '-' ? dotsAndZerosString.slice(1) : '-' + dotsAndZerosString;
     } else {
-        (parseFloat(x) * (-1)) ? x = (parseFloat(x) * (-1)).toString().substring(0,14) : x = '-' + x;
-        calculatorOutput.innerText[0] == '-' ?
-            calculatorOutput.innerText = calculatorOutput.innerText.slice(1).substring(0,14) :
-            calculatorOutput.innerText = ('-' + calculatorOutput.innerText).substring(0,14);
+        (parseFloat(x) * (-1)) ? x = (parseFloat(x) * (-1)).toString().substring(0,14) : null;
+        calculatorOutput.innerText = (x);
+        dotsAndZerosString = dotsAndZerosString.slice(0,1) == '-' ? dotsAndZerosString.slice(1) : '-' + dotsAndZerosString;
     }
-    let temp = historyLine.innerText;
-    historyLine.innerText = temp.substring(0,temp.length-1) + '-' + temp[-1,temp.length-1];;
 });
 
 for (let i = 0; i < calcButtons.length; i++) {
