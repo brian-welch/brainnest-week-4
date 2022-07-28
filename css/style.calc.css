@@ -181,7 +181,7 @@
 }
 
 #memoryMessage, #exponentMessage, #sqrtMessage {
-    opacity: 0.02;
+    opacity: 0.1;
 }
 
 #memoryMessage.opacity-one, #exponentMessage.opacity-one, #sqrtMessage.opacity-one {
