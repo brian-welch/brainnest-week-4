@@ -33,7 +33,20 @@ const decimalHandler = (dataValue) => {
     return (dataValue == '.' && calculatorOutput.innerText.length == 0) ? '0' + dataValue : dataValue;
 }
 
-const dotsAndZerosStringCheck = (value) => {
+const leadingZeroCheck = (string) => {
+    return string[0] == '0' && string[1] != '.' && string.length > 1 ?
+        string.substring(1,string.length).substring(0,14) :
+        string.substring(0,14);
+}
+
+const trailingZeroCheck = (string) => {
+    do { string = string.substring(0,string.length - 2) }
+        while (string.indexOf('.') > -1 && string[string.length - 1] == '0')
+    return string;
+}
+
+
+const decimalZeroCheck = (value) => {
     let temp = true;
     if (value === '.') {
         temp = dotsAndZerosString.split('').indexOf('.') > -1 ? false : true;
@@ -69,7 +82,7 @@ const longOutputSantizer = (output) => {
     } else {
         temp = output.toString().substring(0, 14);
     }
-    return trailingDecimalCheck(temp);
+    return trailingDecimalCheck(trailingZeroCheck(temp));
 }
 
 const calcRouter = (a, b, actionLogged, dataValue) => {
@@ -115,17 +128,19 @@ const calcRouter = (a, b, actionLogged, dataValue) => {
             result = a;
             setActionLogged('execute');
             break;
-      }
-      x = result, y = '';
-      return result;
+    }
+    x = result, y = '';
+    return result;
 }
 
 const calculate = (event) => {
     let dataValue = event.currentTarget.dataset.value;
     let dataType = event.currentTarget.dataset.type;
-    if (dataType == 'input' && dotsAndZerosStringCheck(dataValue)) {
+    if (dataType == 'input' && decimalZeroCheck(dataValue)) {
         actionLogged == 'restart' ? (x = '', actionLogged = false) : null;
-        !actionLogged ? (x += decimalHandler(dataValue)) : (y += dataValue);
+        !actionLogged ?
+            (x += decimalHandler(dataValue), x = leadingZeroCheck(x)) :
+            (y += decimalHandler(dataValue), y = leadingZeroCheck(y));
     } else if (dataType == 'action') {
         historyLine.innerText += dotsAndZerosString;
         dotsAndZerosString = '';
@@ -143,12 +158,14 @@ const calculate = (event) => {
 const addToOutput = (event) => {
     let dataValue = event.currentTarget.dataset.value;
     let dataType = event.currentTarget.dataset.type;
-    if (dataType == 'input' && dotsAndZerosStringCheck(dataValue)) {
+    if (dataType == 'input' && decimalZeroCheck(dataValue)) {
         executed ? (calculatorOutput.innerText = '', executed = false) : null;
         calculatorOutput.append(decimalHandler(dataValue));
-        calculatorOutput.innerText = calculatorOutput.innerText.substring(0,14);
+        calculatorOutput.innerText = leadingZeroCheck(calculatorOutput.innerText);
     } else if (dataType == 'action' || dataType == 'direct') {
-        dataValue == 'execute' ? calculatorOutput.innerText = result : calculatorOutput.innerText = x;
+        dataValue == 'execute' ?
+            calculatorOutput.innerText = (result) :
+            calculatorOutput.innerText = (x);
         executed = true;
     }
 }
@@ -178,12 +195,12 @@ const addToHistory = (event) => {
             historyLine = document.createElement('li');
         }
     }
-    if (!dataIgnore && dotsAndZerosStringCheck(dataValue)) {
+    if (!dataIgnore && decimalZeroCheck(dataValue)) {
         dataType == 'action' && histLine.substring(histLineLen - 3, histLineLen) != dataSymbol ?    
             historyLine.append(dataSymbol) :
             null;
         dataType == "input" ?
-            dotsAndZerosString += decimalHandler(dataSymbol) :
+            (dotsAndZerosString += decimalHandler(dataSymbol), dotsAndZerosString = leadingZeroCheck(dotsAndZerosString)) :
             null;
     }
     console.log(`result(${typeof result}): ${result}, x(${typeof x}): ${x}, y(${typeof y}): ${y}, actionLogged: ${actionLogged}, dotsAndZerosString: ${dotsAndZerosString}\n\n`);
