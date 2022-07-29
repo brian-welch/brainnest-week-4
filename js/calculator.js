@@ -40,8 +40,9 @@ const leadingZeroCheck = (string) => {
 }
 
 const trailingZeroCheck = (string) => {
-    do { string = string.substring(0,string.length - 2) }
-        while (string.indexOf('.') > -1 && string[string.length - 1] == '0')
+    while (string.indexOf('.') > -1 && string[string.length - 1] == '0') {
+        string = string.substring(0,string.length - 2);
+    }
     return string;
 }
 
